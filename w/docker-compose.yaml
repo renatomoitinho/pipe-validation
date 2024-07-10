@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+    #
+    # MINIO https://min.io/
+    #
+    minio:
+        image: minio/minio
+        restart: always
+        container_name: minio
+        environment:
+            MINIO_ROOT_USER: AKIAIOSFODNN7EXAMPLE
+            MINIO_ROOT_PASSWORD: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+        command: server --console-address ":9001" /data 
+        ports:
+            - "9001:9001"
+            - "9000:9000"
+        volumes:
+            - "minio_volume:/data"
+        networks:
+            - custom-network
+
+    
+volumes:
+    minio_volume:
+        name: minio_volume
+        driver: local
+    
+networks:
+    custom-network:
+        name: custom-network
